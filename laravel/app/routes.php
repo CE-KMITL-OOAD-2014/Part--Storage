@@ -11,12 +11,27 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('hello');
+
+Route::get('/', function(){ return View::make('LoginPage');});
+Route::post('/login','UserController@loginAction');
+Route::post('/Logout','UserController@logoutAction');
+
+Route::get('/CreateProfile',function(){
+	return View::make('CreateProfilePage');
 });
 
-Route::get('/Yo', function()
-{
-	return View::make('Yo');
+Route::post('/created','OwnerController@createuser');
+
+Route::get('/AddNewProduct',function(){
+	return View::make('AddNewProductPage');
 });
+Route::post('/added','StockController@addnewproduct');
+
+
+
+Route::get('/SearchProduct',function(){
+	return View::make('SearchProductPage');
+});
+Route::post('/searched','UserController@searchproduct');
+
+?>
