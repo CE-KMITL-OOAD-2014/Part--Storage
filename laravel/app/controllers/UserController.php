@@ -1,50 +1,54 @@
 <?php
 	class UserController extends BaseController{
-		public function loginAction(){
-     	
-		$usernameinput = Input::get('username');
-		$passwordinput = Input::get('password');
-		$login_data = array(
-		 	'username' => $usernameinput,
-		 	'password' => $passwordinput,
-		);
-		
-			if(Auth::attempt($login_data)) {
-				$checkrole = Auth::User()->role; // Do it as class object
+		public function indexAction(){
+			if(Auth::User()==NULL){
+				return Redirect::to('/');		
+			}
+			else{
+			$checkrole = Auth::User()->role; 
 				if($checkrole=='owner'){
 		 			return View::make('OwnerPage');
 				}
 				else if($checkrole=="cashier"){  
-					return View::make('CashierPage'); 
+					return View::make('CashierPage');
 				}
 				else if($checkrole=="stockemployee"){
 		 			return View::make('StockEmployeePage');
 				}
 			}
-	 	  	else
-	 	  	 	return redirect::to('/');
+		}
+
+		public function loginAction(){
+		$username = Input::get('username');
+		$password = Input::get('password');
+			$login_data = array(
+		 	'username' => $username,
+		 	'password' => $password,
+			);
 			
-	}
+			if(Auth::attempt($login_data)) {
+				return Redirect::to('/mainmenu');
+			}
+	 	  	else
+	 	  	 	return Redirect::to('/');
+		}
+
 		public function logoutAction(){
 			Auth::logout();
 			return Redirect::to('/');
 		}
 
 		public function searchproduct(){
-				/*$checkrole = Auth::User()->role; // Do it as class object
-				if($checkrole=='owner'){
-		 			return View::make('OwnerPage');
-				}
-				else if($checkrole=="cashier"){  
-					return View::make('CashierPage'); 
-				}
-				else if($checkrole=="stockemployee"){
-		 			return View::make('StockEmployeePage');
-				}
-	 	  		
-	 	  	 	 	return Redirect::to('/');*/
-	 	  	 	 $x = [[11,12,13],[21,22,23],[31,32,33]];	
-				return View::make('hello')->with('x',$x);	
+
+			$nameinput = Input::get('name');
+			$typeinput = Input::get('type');
+			$versioninput = Input::get('version');
+			$brandinput	= Input::get('brand');
+
+	 	  	$foundProduct = DB::table('products')->where('name', $nameinput)->orWhere('type', $typeinput
+	 	  	 			)->orWhere('version', $versioninput)->orWhere('brand', $brandinput)->get();
+	 	  
+			return View::make('SearchProductPage')->with('productdata',$foundProduct);
 		}
 	}
 ?>

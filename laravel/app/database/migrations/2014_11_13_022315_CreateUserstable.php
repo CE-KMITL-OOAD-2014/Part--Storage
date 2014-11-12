@@ -19,7 +19,8 @@ class CreateUserstable extends Migration {
 			$table->string('name');
 			$table->string('lastname');
 			$table->string('role');
-			$table->timestamps();		
+			$table->timestamps();
+			$table->remembertoken();	
 	});
 	}
 	/**

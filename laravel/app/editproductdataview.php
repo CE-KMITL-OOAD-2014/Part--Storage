@@ -1,4 +1,4 @@
-<?
+
 <form action="editproductprocess.php" method="post" name="edit_product_form">
 	<input type="text" name="create[productid]" placeholder="Product id">
 	<input type="text" name="create[productname]" placeholder="Name" >

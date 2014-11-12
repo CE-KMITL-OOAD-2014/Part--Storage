@@ -11,3 +11,6 @@
 	<input type="submit" value="create profile">
 </form>
 
+<?php 
+	echo $thisproduct;
+?>

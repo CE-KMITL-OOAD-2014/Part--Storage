@@ -13,7 +13,9 @@
 
 App::before(function($request)
 {
-	//
+	if(!Request::secure() && array_get($_SERVER, 'SERVER_PORT') != 443){
+        return Redirect::secure(Request::path());
+    }
 });
 
 
@@ -33,7 +35,7 @@ App::after(function($request, $response)
 |
 */
 
-Route::filter('auth', function()
+/*Route::filter('auth', function()
 {
 	if (Auth::guest())
 	{
@@ -43,10 +45,10 @@ Route::filter('auth', function()
 		}
 		else
 		{
-			return Redirect::guest('login');
+			return Redirect::guest('/');
 		}
 	}
-});
+});*/
 
 
 Route::filter('auth.basic', function()
@@ -88,3 +90,10 @@ Route::filter('csrf', function()
 		throw new Illuminate\Session\TokenMismatchException;
 	}
 });
+
+Route::filter('checkAuth', function()
+{
+	if (Auth::guest())return Redirect::guest('/');
+		
+	}
+);
