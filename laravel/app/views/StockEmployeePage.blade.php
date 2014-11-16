@@ -1,16 +1,13 @@
 
 <h1> StockEmployee Page</h1>
-<form action="ReceiveOrder" method="get" name="ReceiveOrder">
-	<input type="submit" value="ReceiveOrder">
+<form action="userProfile" method="post" name="User Profile">
+  <input type="submit" value="User Profile">
 </form>
-<form action="AddNewProduct" method="get" name="AddNewProduct">
-	<input type="submit" value="Add new product">
+<form action="CheckOrderFromCashier" method="post" name="ReceiveOrder">
+	<input type="submit" value="Check order from cashier">
 </form>
-<form action="EditProduct" method="get" name="EditProduct">
-	<input type="submit" value="EditProduct">
-</form>
-<form action="SearchProduct" method="get" name="SearchProduct">
-	<input type="submit" value="Search Product">
+<form action="AddProductLocation" method="get" name="AddLocation">
+	<input type="submit" value="Add Product Location">
 </form>
 <form action="logout" method="post" name="Log out">
 	<input type="submit" value="Log out">

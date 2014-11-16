@@ -18,55 +18,52 @@
 			return Redirect::to('/mainmenu');
 		}
 		public function searchProfile(){
-			$idinput = Input::get('id');	
-	 	  	$foundUser = DB::table('users')->where('id', $idinput)->get();
-			return View::make('EditProfilePage')->with('userdata',$foundUser);
+			$usernameinput = Input::get('username');
+			$nameinput = Input::get('name');
+			$lastnameinput = Input::get('lasename');
+			$roleinput	= Input::get('roleposition');
+	 	  	$foundUser = User::where('username',$usernameinput)->orWhere('name',$nameinput)
+	 	  					->orWhere('lastname',$lastnameinput)->orWhere('role',$roleinput)->get();
+			return View::make('EditProfilePage')->with('foundUser',$foundUser);
 		}
 
 		public function editedProfile(){
-			$id = Input::get('id');
-			$newusername = Input::get('username');
-			$newpassword = Input::get('password');
-			$newname = Input::get('name');
-			$newlastname = Input::get('lastname');	
-			$newrole = Input::get('roleposition');
-			
-			$newuser = DB::table('users')->where('id',$id)->get();
-			
-			$newuser->username = $newusername;
-			$newuser->password = $newpassword;
-			$newuser->name = $newname;
-			$newuser->lastname = $newlastname;
-			$newuser->role = $newrole;
-
+			$userdata = User::find(Input::get('id'));
+			//$newuser = User::where('id','=',$id)->get();
+			$userdata->username = Input::get('username');
+			$userdata->password = Hash::make(Input::get('password'));
+			$userdata->name = Input::get('name');
+			$userdata->lastname = Input::get('lastname');
+			$userdata->role = Input::get('roleposition');
+			$userdata->save();
+			return Redirect::to('mainmenu');
 		}
 
-		public function sendorder(){
-			$orderid = Input::get('orderid');
-			$name = Input::get('name');
-			$type = Input::get('type');
-			$version = Input::get('version');
-			$brand = Input::get('brand');
-			$amount = Input::get('amount');
-			$price = Input::get('price');
-			$paymoney = Input::get('paymoney');
-			$dateandtime = Input::get('dateandtime');
-			$ordertype = Input::get('ordertype');
+		public function ownerSendOrder(){
 
 			$neworder = new Order();
-			$neworder->orderid = $orderid;
-			$neworder->name = $name;
-			$neworder->type = $type;
-			$neworder->version = $version; 
-			$neworder->brand = $brand;
-			$neworder->amount = $amount;
-			$neworder->price = $price;
-			$neworder->paymoney = $paymoney;
-			$neworder->datetime = $dateandtime;
-			$neworder->ordertype = $ordertype;
+			$neworder->orderid = Input::get('orderid');
+			$neworder->name = Input::get('name');
+			$neworder->type = Input::get('type');
+			$neworder->version = Input::get('version');
+			$neworder->brand = Input::get('brand');
+			$neworder->amount = Input::get('amount');
+			$neworder->price = Input::get('price');
+			$neworder->paymoney = Input::get('paymoney');
+			$neworder->datetime = Input::get('dateandtime');
+			$neworder->ordertype = Input::get('ordertype');
+			$neworder->responsible_owner = Auth::User()->name;
 			$neworder->save();
 
-			return View::make('SendOrderPage')->with('neworder',$neworder);
+			$allorder = Order::all();
+
+			return View::make('SendOrderPage')->with('neworder',$neworder)->with('allorder',$allorder);
 		}
+
+		public function showAllProduct(){
+			$allproduct = Product::all();
+			return View::make('ManageProductPage')->with('allproduct',$allproduct);
+		}
+
 	}
 ?>

@@ -15,8 +15,6 @@
 Route::get('/', function(){ 
 	return View::make('LoginPage');
 });
-Route::get('/mainmenu','UserController@indexAction');
-
 Route::get('/CreateProfile',array('before' => 'checkAuth',function(){
 	return View::make('CreateProfilePage');
 }));
@@ -26,24 +24,39 @@ Route::get('/EditProfile',array('before' => 'checkAuth',function(){
 Route::get('/AddNewProduct',array('before' => 'checkAuth',function(){
 	return View::make('AddNewProductPage');
 }));
-Route::get('/SearchProduct',array('before' => 'checkAuth',function(){
-	return View::make('SearchProductPage');
-}));
 Route::get('/SendBuySaleOrder',array('before' => 'checkAuth',function(){
-	return View::make('SendOrderPage');
+	return View::make('SendOrderPage')->with('allorder',Order::all());
+}));
+Route::get('/ManageProduct',array('before' => 'checkAuth',function(){
+	return View::make('ManageProductPage');
+}));
+Route::get('/AddProductLocation',array('before' => 'checkAuth',function(){
+	return View::make('AddLocationPage');
 }));
 
-Route::post('/searched','UserController@searchproduct');
+
+
+
+
+Route::get('/mainmenu','UserController@indexAction');
+Route::post('/searchProduct','UserController@searchproduct');
 Route::post('/login','UserController@loginAction');
 Route::post('/logout','UserController@logoutAction');
+Route::post('/userProfile','UserController@showUserProfileData');
+Route::post('/EditedProduct','UserController@editProductdata');
 
-Route::post('/created','OwnerController@createNewUserProfile');
+Route::post('/showAllProduct','OwnerController@showAllProduct');
+Route::post('/CreatedProfile','OwnerController@createNewUserProfile');
 Route::post('/SearchProfile','OwnerController@searchProfile');
 Route::post('/EditedProfile','OwnerController@editedProfile');
-Route::post('/ordered','OwnerController@sendorder');
+Route::post('/ordered','OwnerController@ownerSendOrder');
 
 Route::post('/CheckOrderFromOwner','CashierController@checkOrderFromOwner');
-Route::post('/acceptorder','CashierController@setResponsibleOfOrder');
+Route::post('/cashierAcceptOrder','CashierController@cashierAcceptOrder');
+Route::post('/calculatePaymoney','CashierController@calculatePaymoney');
 
-Route::post('/addedproduct','StockController@addnewproduct');
+Route::post('/CheckOrderFromCashier','StockController@checkOrderFromCashier');
+Route::post('/stockEmployeeAcceptOrder','StockController@stockEmployeeAcceptOrder');
+
+
 ?>

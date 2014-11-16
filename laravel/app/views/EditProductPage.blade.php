@@ -1,6 +1,6 @@
-<h1>Edit Product Page</h1>
+<h1>Edit Product Data Page</h1>
 
-<form action="searchedProduct" method="post" name="search_page">
+<form action="searchProduct" method="post" name="search_page">
 	<input type="text" name="name" placeholder="Name" >
 	<input type="text" name="type" placeholder="Type" >
 	<input type="text" name="version" placeholder="Version">
@@ -12,8 +12,8 @@
 	<input type="submit" value="Back to main menu">
 </form>
 
-@if(isset($productdata)) 
-			@foreach($productdata as $ele)			
+@if(isset($foundproduct)) 
+			@foreach($foundproduct as $ele)			
 					{{$ele->id}}
 					{{$ele->name}}
 					{{$ele->type}}
@@ -23,15 +23,15 @@
 					{{$ele->price}}
 					{{$ele->location}}
 					<form action="EditedProduct" method="post" name="edit_product_form">
-						<input type="number" name="id" placeholder="IdUser">
-							<input type="text" name="name" placeholder="Name" >
-							<input type="text" name="type" placeholder="Type" >
+							<input type="number" name="id" placeholder="IdUser">
+							<input type="text" name="name" placeholder="Name">
+							<input type="text" name="type" placeholder="Type">
 							<input type="text" name="version" placeholder="Version">
 							<input type="text" name="brand" placeholder="Brand">
 							<input type="number" name="price" placeholder="price" >
 							<input type="number" name="amount" placeholder="Amount" >
 							<input type="text" name="location" placeholder="Location">
 							<input type="submit" value="Edit Product">
-					</form>	
+					</form>						
 		@endforeach
 @endif
