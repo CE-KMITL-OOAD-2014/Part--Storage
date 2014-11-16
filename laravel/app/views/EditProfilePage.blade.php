@@ -22,6 +22,7 @@
 					{{$eachUser->lastname}}
 					{{$eachUser->role}}
 					<form action="EditedProfile" method="post" name="edit_profile_form">
+						<input type="hidden" name="id" value={{$eachUser->id}}>
 						<input type="text" name="username" placeholder="Username" >
 						<input type="text" name="password" placeholder="Password" >
 						<input type="text" name="name" placeholder="Name">

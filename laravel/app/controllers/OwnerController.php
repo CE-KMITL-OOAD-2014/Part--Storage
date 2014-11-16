@@ -30,11 +30,11 @@
 		public function editedProfile(){
 			$userdata = User::find(Input::get('id'));
 			//$newuser = User::where('id','=',$id)->get();
-			$userdata->username = Input::get('username');
-			$userdata->password = Hash::make(Input::get('password'));
-			$userdata->name = Input::get('name');
-			$userdata->lastname = Input::get('lastname');
-			$userdata->role = Input::get('roleposition');
+			if(Input::get('username')!=NULL)$userdata->username = Input::get('username');
+			if(Input::get('password')!=NULL)$userdata->password = Hash::make(Input::get('password'));
+			if(Input::get('name')!=NULL)$userdata->name = Input::get('name');
+			if(Input::get('lastname')!=NULL)$userdata->lastname = Input::get('lastname');
+			if(Input::get('roleposition')!=NULL)$userdata->role = Input::get('roleposition');
 			$userdata->save();
 			return Redirect::to('mainmenu');
 		}
